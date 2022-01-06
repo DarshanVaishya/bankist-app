@@ -329,8 +329,8 @@ h2 {
 	margin: 10px 0;
 	border-radius: 10px;
 
-	opacity: 0.95;
-	transition: all 0.2s;
+	opacity: 0.9;
+	transition: all 1s;
 }
 
 .hide-notification {
@@ -344,5 +344,6 @@ h2 {
 }
 
 .hidden {
+	transform: translateX(-100%);
 	opacity: 0;
 }
