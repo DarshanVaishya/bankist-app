@@ -6,12 +6,12 @@ Live Preview: [Link](https://bankist.darshanvaishya.xyz)
 
 ## Test data for login
 
-| username | pin  |
-| -------- | ---- |
-| js       | 1111 |
-| jd       | 2222 |
-| stw      | 3333 |
-| ss       | 4444 |
+| username | pin  | owner                  |
+| -------- | ---- | ---------------------- |
+| js       | 1111 | Jonas Schmedtmann      |
+| jd       | 2222 | Jessica Davis          |
+| stw      | 3333 | Steven Thomas Williams |
+| ss       | 4444 | Sarah Smith            |
 
 ## Technologies used
 

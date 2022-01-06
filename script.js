@@ -49,6 +49,7 @@ const labelTimer = document.querySelector(".timer");
 
 const containerApp = document.querySelector(".app");
 const containerMovements = document.querySelector(".movements");
+const containerNotificationBox = document.querySelector(".notification-box");
 
 const btnLogin = document.querySelector(".login__btn");
 const btnTransfer = document.querySelector(".form__btn--transfer");
@@ -145,10 +146,10 @@ btnLogin.addEventListener("click", (event) => {
 	);
 
 	if (currentAccount?.pin === +inputLoginPin.value) {
-		console.log("CORRECT PIN");
 		labelWelcome.textContent = `Welcome back, ${
 			currentAccount.owner.split(" ")[0]
 		}`;
+		document.body.style.overflowY = "visible";
 		containerApp.style.opacity = 1;
 
 		// Clearing inputs
@@ -159,7 +160,33 @@ btnLogin.addEventListener("click", (event) => {
 		displayMovements(currentAccount.movements);
 		calcDisplayBalance(currentAccount.movements);
 		calcDisplaySummary(currentAccount.movements);
+
+		displayNotification("Logged in successfully", "success");
+	} else if (inputLoginPin.value === "" || inputLoginUsername.value === "") {
+		displayNotification("Please fill all the inputs", "error");
 	} else {
-		console.log("WRONG PIN");
+		displayNotification("Invalid username or password", "error");
 	}
 });
+
+// Notification
+function removeNotification(parent = true) {
+	let notification = this.parentElement;
+	if (!parent) notification = this;
+	notification.classList.add("hidden");
+	notification.addEventListener("transitionend", notification.remove);
+}
+
+function displayNotification(text, className = "") {
+	const notification = `
+	<div class="notification ${className}">
+		${text}
+		<button class="hide-notification">X</button>
+	</div>`;
+	containerNotificationBox.insertAdjacentHTML("afterbegin", notification);
+
+	const hideButton = document.querySelector(".hide-notification");
+	hideButton.addEventListener("click", removeNotification);
+
+	setTimeout(removeNotification.bind(hideButton.parentElement, false), 5000);
+}
