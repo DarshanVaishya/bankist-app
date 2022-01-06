@@ -9,7 +9,7 @@ let currentAccount;
 
 // Data
 const account1 = {
-	owner: "Jonas Schmedtmann",
+	owner: "Darshan Vaishya",
 	movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
 	interestRate: 1.2, // %
 	pin: 1111,
@@ -93,6 +93,7 @@ function displayMovements(movements) {
 }
 
 /**
+ * Calculates the sum of all the transactions and displays the sum on current balance element on the DOM.
  * @param {number[]} movements
  */
 function calcDisplayBalance(movements) {
@@ -169,24 +170,23 @@ btnLogin.addEventListener("click", (event) => {
 	}
 });
 
-// Notification
-function removeNotification(parent = true) {
-	let notification = this.parentElement;
-	if (!parent) notification = this;
-	notification.classList.add("hidden");
-	notification.addEventListener("transitionend", notification.remove);
+// Notification functions
+function removeNotification() {
+	this.classList.add("hidden");
+	this.addEventListener("transitionend", this.remove);
 }
 
 function displayNotification(text, className = "") {
-	const notification = `
-	<div class="notification ${className}">
+	let notification = `
+	<div class="notification hidden ${className}">
 		${text}
 		<button class="hide-notification">X</button>
 	</div>`;
 	containerNotificationBox.insertAdjacentHTML("afterbegin", notification);
 
-	const hideButton = document.querySelector(".hide-notification");
-	hideButton.addEventListener("click", removeNotification);
+	notification = document.querySelector(".notification");
+	notification.addEventListener("click", removeNotification);
 
-	setTimeout(removeNotification.bind(hideButton.parentElement, false), 5000);
+	setTimeout(removeNotification.bind(notification), 5000);
+	setTimeout(() => notification.classList.remove("hidden"), 50);
 }

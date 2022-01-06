@@ -8,7 +8,7 @@ Live Preview: [Link](https://bankist.darshanvaishya.xyz)
 
 | username | pin  | owner                  |
 | -------- | ---- | ---------------------- |
-| js       | 1111 | Jonas Schmedtmann      |
+| dv       | 1111 | Darshan Vaishya        |
 | jd       | 2222 | Jessica Davis          |
 | stw      | 3333 | Steven Thomas Williams |
 | ss       | 4444 | Sarah Smith            |
