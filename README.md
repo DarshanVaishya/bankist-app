@@ -4,6 +4,15 @@ The bankist app is a website which handles bank payments between different accou
 
 Live Preview: [Link](https://bankist.darshanvaishya.xyz)
 
+## Test data for login
+
+| username | pin  |
+| -------- | ---- |
+| js       | 1111 |
+| jd       | 2222 |
+| stw      | 3333 |
+| ss       | 4444 |
+
 ## Technologies used
 
 - HTML
