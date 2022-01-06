@@ -27,8 +27,6 @@ body {
 	height: 100vh;
 	padding: 2rem;
 	position: relative;
-
-	overflow-y: hidden;
 }
 
 nav {
@@ -312,10 +310,15 @@ h2 {
 
 	padding: 1rem;
 	min-width: 20vw;
+	pointer-events: none;
 }
 
 .success {
 	color: green !important;
+}
+
+.warning {
+	color: orange !important;
 }
 
 .error {
@@ -332,7 +335,7 @@ h2 {
 
 	padding: 2rem;
 	font-size: 1.75rem;
-	margin: 10px 0;
+	margin: 10px;
 	border-radius: 10px;
 	font-weight: 700;
 
@@ -340,6 +343,7 @@ h2 {
 	transition: all 0.5s;
 
 	cursor: pointer;
+	pointer-events: all;
 }
 
 .hide-notification {
@@ -358,4 +362,62 @@ h2 {
 .hidden {
 	transform: translateX(100%);
 	opacity: 0;
+}
+
+/* Modal window styles */
+.modal-window-wrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 5;
+
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(3px);
+
+	display: none;
+	align-items: center;
+	justify-content: center;
+}
+.modal-window {
+	padding: 5rem;
+	width: 40ch;
+	z-index: 10;
+
+	background-color: white;
+	border-radius: 20px;
+	font-size: 2rem;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	gap: 4rem;
+}
+
+.modal-window__btns {
+	display: flex;
+	justify-content: space-between;
+}
+
+.visible {
+	display: flex;
+}
+
+.btn {
+	padding: 1.5rem 4.5rem;
+	font-size: 2rem;
+	border: none;
+	border-radius: 10px;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.btn.yes {
+	background-color: #f03e3e;
+}
+
+.btn.no {
+	background-color: black;
 }

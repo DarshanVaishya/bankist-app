@@ -50,12 +50,17 @@ const labelTimer = document.querySelector(".timer");
 const containerApp = document.querySelector(".app");
 const containerMovements = document.querySelector(".movements");
 const containerNotificationBox = document.querySelector(".notification-box");
+const containerModalWindow = document.querySelector(".modal-window-wrapper");
+
+const modalwindow = document.querySelector(".modal-window");
 
 const btnLogin = document.querySelector(".login__btn");
 const btnTransfer = document.querySelector(".form__btn--transfer");
 const btnLoan = document.querySelector(".form__btn--loan");
 const btnClose = document.querySelector(".form__btn--close");
 const btnSort = document.querySelector(".btn--sort");
+const btnYes = document.querySelector(".yes");
+const btnNo = document.querySelector(".no");
 
 const inputLoginUsername = document.querySelector(".login__input--user");
 const inputLoginPin = document.querySelector(".login__input--pin");
@@ -99,6 +104,7 @@ function displayMovements(movements) {
 function calcDisplayBalance(movements) {
 	const balance = movements.reduce((sum, current) => sum + current);
 	labelBalance.textContent = `${balance}€`;
+	currentAccount.balance = balance;
 }
 
 /**
@@ -139,6 +145,16 @@ function createUsernames(accounts) {
 }
 createUsernames(accounts);
 
+/**
+ * Updates the UI for the given array of movements.
+ * @param {number[]} movements
+ */
+function updateUI(movements) {
+	displayMovements(movements);
+	calcDisplayBalance(movements);
+	calcDisplaySummary(movements);
+}
+
 btnLogin.addEventListener("click", (event) => {
 	event.preventDefault();
 
@@ -150,7 +166,6 @@ btnLogin.addEventListener("click", (event) => {
 		labelWelcome.textContent = `Welcome back, ${
 			currentAccount.owner.split(" ")[0]
 		}`;
-		document.body.style.overflowY = "visible";
 		containerApp.style.opacity = 1;
 
 		// Clearing inputs
@@ -158,15 +173,56 @@ btnLogin.addEventListener("click", (event) => {
 		inputLoginPin.blur();
 
 		// Populating with data
-		displayMovements(currentAccount.movements);
-		calcDisplayBalance(currentAccount.movements);
-		calcDisplaySummary(currentAccount.movements);
+		updateUI(currentAccount.movements);
 
 		displayNotification("Logged in successfully", "success");
 	} else if (inputLoginPin.value === "" || inputLoginUsername.value === "") {
 		displayNotification("Please fill all the inputs", "error");
 	} else {
 		displayNotification("Invalid username or password", "error");
+	}
+});
+
+btnTransfer.addEventListener("click", (event) => {
+	event.preventDefault();
+	const amount = +inputTransferAmount.value;
+	let receiverAcc = inputTransferTo.value;
+
+	receiverAcc = accounts.find((acc) => acc.username === receiverAcc);
+
+	if (!receiverAcc) displayNotification("User not found!", "warning");
+	else if (!amount || amount <= 0)
+		displayNotification("Enter a valid amount", "warning");
+	else if (currentAccount.username === receiverAcc.username)
+		displayNotification("Can't send money to self", "warning");
+	else if (currentAccount.balance < amount)
+		displayNotification("Not enough balance!", "error");
+	else {
+		currentAccount.movements.push(-1 * amount);
+		receiverAcc.movements.push(amount);
+
+		inputTransferAmount.value = inputTransferTo.value = "";
+		inputTransferAmount.blur();
+		inputTransferTo.blur();
+		displayNotification(
+			`Successfully transferred ${amount} to ${receiverAcc.owner}`,
+			"success"
+		);
+	}
+
+	updateUI(currentAccount.movements);
+});
+
+btnClose.addEventListener("click", (event) => {
+	event.preventDefault();
+
+	if (
+		inputCloseUsername.value === currentAccount.username &&
+		+inputClosePin.value === currentAccount.pin
+	) {
+		showModal();
+	} else {
+		displayNotification("Invalid username or pin entered", "error");
 	}
 });
 
@@ -190,3 +246,26 @@ function displayNotification(text, className = "") {
 	setTimeout(removeNotification.bind(notification), 5000);
 	setTimeout(() => notification.classList.remove("hidden"), 50);
 }
+
+// Modal window functions
+function showModal() {
+	containerModalWindow.classList.add("visible");
+}
+
+function closeModal() {
+	containerModalWindow.classList.remove("visible");
+}
+
+btnNo.addEventListener("click", closeModal);
+btnYes.addEventListener("click", () => {
+	const index = accounts.findIndex(
+		(account) => account.owner === currentAccount.owner
+	);
+	accounts.splice(index, 1);
+	currentAccount = undefined;
+	containerApp.style.opacity = 0;
+	labelWelcome.textContent = "Log in to get started";
+
+	displayNotification("Successfully deleted your account", "success");
+	closeModal();
+});
