@@ -4,8 +4,8 @@
 /////////////////////////////////////////////////
 // BANKIST APP
 
-// Constants
-const INTEREST_RATE = 0.012;
+// Globals
+let currentAccount;
 
 // Data
 const account1 = {
@@ -90,7 +90,6 @@ function displayMovements(movements) {
 		containerMovements.insertAdjacentHTML("afterbegin", element);
 	});
 }
-displayMovements(account1.movements);
 
 /**
  * @param {number[]} movements
@@ -99,7 +98,6 @@ function calcDisplayBalance(movements) {
 	const balance = movements.reduce((sum, current) => sum + current);
 	labelBalance.textContent = `${balance}€`;
 }
-calcDisplayBalance(account1.movements);
 
 /**
  * Given an array of numbers, it will display all the deposits and withdrawals as well as the interest generated in the DOM.
@@ -117,12 +115,12 @@ function calcDisplaySummary(movements) {
 	// Calculating the interest
 	result = movements
 		.filter((movement) => movement > 0)
-		.map((mov) => mov * INTEREST_RATE)
+		.map((mov) => (mov * currentAccount.interestRate) / 100)
 		.filter((mov) => mov >= 1)
-		.sum();
+		.sum()
+		.toFixed(2);
 	labelSumInterest.textContent = `${result}€`;
 }
-calcDisplaySummary(account1.movements);
 
 /**
  * Given an array of objects, it will generate username for it by joining the first letters of each word.
@@ -138,4 +136,30 @@ function createUsernames(accounts) {
 	});
 }
 createUsernames(accounts);
-createUsernames();
+
+btnLogin.addEventListener("click", (event) => {
+	event.preventDefault();
+
+	currentAccount = accounts.find(
+		(acc) => acc.username === inputLoginUsername.value
+	);
+
+	if (currentAccount?.pin === +inputLoginPin.value) {
+		console.log("CORRECT PIN");
+		labelWelcome.textContent = `Welcome back, ${
+			currentAccount.owner.split(" ")[0]
+		}`;
+		containerApp.style.opacity = 1;
+
+		// Clearing inputs
+		inputLoginUsername.value = inputLoginPin.value = "";
+		inputLoginPin.blur();
+
+		// Populating with data
+		displayMovements(currentAccount.movements);
+		calcDisplayBalance(currentAccount.movements);
+		calcDisplaySummary(currentAccount.movements);
+	} else {
+		console.log("WRONG PIN");
+	}
+});
