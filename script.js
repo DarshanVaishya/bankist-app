@@ -9,7 +9,7 @@ let currentAccount;
 
 // Data
 const account1 = {
-	owner: "Darshan Vaishya",
+	owner: "Jonas Schmedtmann",
 	movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
 	interestRate: 1.2, // %
 	pin: 1111,
@@ -36,7 +36,14 @@ const account4 = {
 	pin: 4444,
 };
 
-const accounts = [account1, account2, account3, account4];
+const account5 = {
+	owner: "Darshan Vaishya",
+	movements: [200, 500, 10000, -5000, 650, -200],
+	interestRate: 1,
+	pin: 1111,
+};
+
+const accounts = [account1, account2, account3, account4, account5];
 
 // Elements
 const labelWelcome = document.querySelector(".welcome");
@@ -82,7 +89,7 @@ Array.prototype.sum = function () {
  * Given an array of numbers, it will parse, create an element and insert them into the movements container inside the DOM.
  * @param {number[]} movements
  */
-function displayMovements(movements) {
+function displayMovements(movements, sort = false) {
 	containerMovements.innerHTML = "";
 	movements.forEach((movement, index) => {
 		const type = movement < 0 ? "withdrawal" : "deposit";
@@ -92,7 +99,6 @@ function displayMovements(movements) {
 		<div class="movements__value">${movement}€</div>
 	</div>`;
 
-		// containerMovements.innerHTML += element;
 		containerMovements.insertAdjacentHTML("afterbegin", element);
 	});
 }
@@ -226,6 +232,23 @@ btnClose.addEventListener("click", (event) => {
 	}
 });
 
+btnLoan.addEventListener("click", (e) => {
+	e.preventDefault();
+	const amount = +inputLoanAmount.value;
+	if (
+		amount > 0 &&
+		currentAccount.movements.some((mov) => mov >= amount * 0.1)
+	) {
+		currentAccount.movements.push(amount);
+		updateUI(currentAccount.movements);
+		displayNotification(`Loan granted!`, "success");
+	} else if (!amount || amount <= 0) {
+		displayNotification("Enter a valid loan amount", "warning");
+	} else {
+		displayNotification("Not enough balance. Take a smaller loan.", "error");
+	}
+});
+
 // Notification functions
 function removeNotification() {
 	this.classList.add("hidden");
@@ -236,7 +259,7 @@ function displayNotification(text, className = "") {
 	let notification = `
 	<div class="notification hidden ${className}">
 		${text}
-		<button class="hide-notification">X</button>
+		<button class="hide-notification">x</button>
 	</div>`;
 	containerNotificationBox.insertAdjacentHTML("afterbegin", notification);
 
