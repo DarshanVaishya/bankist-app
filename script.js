@@ -102,7 +102,7 @@ function displayMovements(movements, sort = false) {
 		const element = `<div class="movements__row">
 		<div class="movements__type movements__type--${type}">${index + 1} ${type}</div>
 		<div class="movements__date">3 days ago</div>
-		<div class="movements__value">${movement}€</div>
+		<div class="movements__value">${movement.toFixed(2)}€</div>
 	</div>`;
 
 		containerMovements.insertAdjacentHTML("afterbegin", element);
@@ -114,7 +114,7 @@ function displayMovements(movements, sort = false) {
  * @param {number[]} movements
  */
 function calcDisplayBalance(movements) {
-	const balance = movements.reduce((sum, current) => sum + current);
+	const balance = +movements.reduce((sum, current) => sum + current).toFixed(2);
 	labelBalance.textContent = `${balance}€`;
 	currentAccount.balance = balance;
 }
@@ -125,21 +125,27 @@ function calcDisplayBalance(movements) {
  */
 function calcDisplaySummary(movements) {
 	// Calculating the deposits
-	let result = movements.filter((movement) => movement > 0).sum();
-	labelSumIn.textContent = `${result}€`;
+	const deposits = movements
+		.filter((movement) => movement > 0)
+		.sum()
+		.toFixed(2);
+	labelSumIn.textContent = `${deposits}€`;
 
 	// Calculating the withdrawals
-	result = movements.filter((movement) => movement < 0).sum();
-	labelSumOut.textContent = `${Math.abs(result)}€`;
+	const withdrawals = movements
+		.filter((movement) => movement < 0)
+		.sum()
+		.toFixed(2);
+	labelSumOut.textContent = `${Math.abs(withdrawals)}€`;
 
 	// Calculating the interest
-	result = movements
+	const interest = movements
 		.filter((movement) => movement > 0)
 		.map((mov) => (mov * currentAccount.interestRate) / 100)
 		.filter((mov) => mov >= 1)
 		.sum()
 		.toFixed(2);
-	labelSumInterest.textContent = `${result}€`;
+	labelSumInterest.textContent = `${interest}€`;
 }
 
 /**
@@ -242,7 +248,7 @@ btnClose.addEventListener("click", (event) => {
 
 btnLoan.addEventListener("click", (e) => {
 	e.preventDefault();
-	const amount = +inputLoanAmount.value;
+	const amount = Math.floor(inputLoanAmount.value);
 	if (
 		amount > 0 &&
 		currentAccount.movements.some((mov) => mov >= amount * 0.1)
