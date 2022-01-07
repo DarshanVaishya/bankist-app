@@ -6,6 +6,7 @@
 
 // Globals
 let currentAccount;
+let isSorted = false;
 
 // Data
 const account1 = {
@@ -59,8 +60,6 @@ const containerMovements = document.querySelector(".movements");
 const containerNotificationBox = document.querySelector(".notification-box");
 const containerModalWindow = document.querySelector(".modal-window-wrapper");
 
-const modalwindow = document.querySelector(".modal-window");
-
 const btnLogin = document.querySelector(".login__btn");
 const btnTransfer = document.querySelector(".form__btn--transfer");
 const btnLoan = document.querySelector(".form__btn--loan");
@@ -91,6 +90,8 @@ Array.prototype.sum = function () {
  */
 function displayMovements(movements, sort = false) {
 	containerMovements.innerHTML = "";
+
+	movements = sort ? movements.slice().sort((a, b) => a - b) : movements;
 	movements.forEach((movement, index) => {
 		const type = movement < 0 ? "withdrawal" : "deposit";
 		const element = `<div class="movements__row">
@@ -180,6 +181,7 @@ btnLogin.addEventListener("click", (event) => {
 
 		// Populating with data
 		updateUI(currentAccount.movements);
+		document.body.style.overflowY = "visible";
 
 		displayNotification("Logged in successfully", "success");
 	} else if (inputLoginPin.value === "" || inputLoginUsername.value === "") {
@@ -226,6 +228,7 @@ btnClose.addEventListener("click", (event) => {
 		inputCloseUsername.value === currentAccount.username &&
 		+inputClosePin.value === currentAccount.pin
 	) {
+		document.body.style.overflow = "hidden";
 		showModal();
 	} else {
 		displayNotification("Invalid username or pin entered", "error");
@@ -247,6 +250,12 @@ btnLoan.addEventListener("click", (e) => {
 	} else {
 		displayNotification("Not enough balance. Take a smaller loan.", "error");
 	}
+});
+
+btnSort.addEventListener("click", (event) => {
+	event.preventDefault();
+	displayMovements(currentAccount.movements, !isSorted);
+	isSorted = !isSorted;
 });
 
 // Notification functions
@@ -277,6 +286,7 @@ function showModal() {
 
 function closeModal() {
 	containerModalWindow.classList.remove("visible");
+	document.body.style.overflow = "visible";
 }
 
 btnNo.addEventListener("click", closeModal);
@@ -285,10 +295,14 @@ btnYes.addEventListener("click", () => {
 		(account) => account.owner === currentAccount.owner
 	);
 	accounts.splice(index, 1);
-	currentAccount = undefined;
+	currentAccount = null;
 	containerApp.style.opacity = 0;
 	labelWelcome.textContent = "Log in to get started";
 
 	displayNotification("Successfully deleted your account", "success");
 	closeModal();
 });
+
+window.onbeforeunload = function () {
+	window.scrollTo(0, 0);
+};

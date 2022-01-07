@@ -27,6 +27,8 @@ body {
 	height: 100vh;
 	padding: 2rem;
 	position: relative;
+
+	overflow-y: hidden;
 }
 
 nav {
@@ -343,7 +345,7 @@ h2 {
 	border-radius: 1rem;
 	font-weight: 700;
 
-	opacity: 0.9;
+	opacity: 0.95;
 	transition: all 0.5s;
 
 	cursor: pointer;
