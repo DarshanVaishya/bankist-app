@@ -377,6 +377,6 @@ window.onbeforeunload = function () {
 	window.scrollTo(0, 0);
 };
 
-currentAccount = account1;
-updateUI(currentAccount.movements);
-containerApp.style.opacity = 1;
+// currentAccount = account1;
+// updateUI(currentAccount.movements);
+// containerApp.style.opacity = 1;
