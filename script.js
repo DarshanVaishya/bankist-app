@@ -121,6 +121,13 @@ function getDateTime(date) {
 	return [dateFull, time];
 }
 
+function currencyFormatter(movement) {
+	return new Intl.NumberFormat(currentAccount.locale, {
+		style: "currency",
+		currency: currentAccount.currency,
+	}).format(movement);
+}
+
 /**
  * Given an array of numbers, it will parse, create an element and insert them into the movements container inside the DOM.
  * @param {number[]} account
@@ -134,13 +141,15 @@ function displayMovements(account, sort = false) {
 
 	movs.forEach((movement, index) => {
 		const type = movement < 0 ? "debit" : "credit";
-		let date = new Date(account.movementsDates[index]);
+		const date = new Date(account.movementsDates[index]);
 		let result = daysPassedSince(date);
+		let amount = currencyFormatter(movement);
+
 		if (!result.includes("day")) result = getDateTime(date)[0];
 		const element = `<div class="movements__row">
 		<div class="movements__type movements__type--${type}">${type}</div>
 		<div class="movements__date">${result}</div>
-		<div class="movements__value">${movement.toFixed(2)}€</div>
+		<div class="movements__value">${amount}</div>
 	</div>`;
 
 		containerMovements.insertAdjacentHTML("afterbegin", element);
@@ -153,7 +162,7 @@ function displayMovements(account, sort = false) {
  */
 function calcDisplayBalance(movements) {
 	const balance = +movements.reduce((sum, current) => sum + current).toFixed(2);
-	labelBalance.textContent = `${balance}€`;
+	labelBalance.textContent = currencyFormatter(balance);
 	currentAccount.balance = balance;
 }
 
@@ -167,14 +176,14 @@ function calcDisplaySummary(movements) {
 		.filter((movement) => movement > 0)
 		.sum()
 		.toFixed(2);
-	labelSumIn.textContent = `${deposits}€`;
+	labelSumIn.textContent = currencyFormatter(deposits);
 
 	// Calculating the withdrawals
 	const withdrawals = movements
 		.filter((movement) => movement < 0)
 		.sum()
 		.toFixed(2);
-	labelSumOut.textContent = `${Math.abs(withdrawals)}€`;
+	labelSumOut.textContent = currencyFormatter(Math.abs(withdrawals));
 
 	// Calculating the interest
 	const interest = movements
@@ -183,7 +192,7 @@ function calcDisplaySummary(movements) {
 		.filter((mov) => mov >= 1)
 		.sum()
 		.toFixed(2);
-	labelSumInterest.textContent = `${interest}€`;
+	labelSumInterest.textContent = currencyFormatter(interest);
 }
 
 /**
@@ -367,3 +376,7 @@ btnYes.addEventListener("click", () => {
 window.onbeforeunload = function () {
 	window.scrollTo(0, 0);
 };
+
+currentAccount = account1;
+updateUI(currentAccount.movements);
+containerApp.style.opacity = 1;
