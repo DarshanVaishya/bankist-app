@@ -16,14 +16,14 @@ const account1 = {
 	pin: 1111,
 
 	movementsDates: [
-		"2019-11-18T21:31:17.178Z",
-		"2019-12-23T07:42:02.383Z",
-		"2020-01-28T09:15:04.904Z",
-		"2020-04-01T10:17:24.185Z",
-		"2020-05-08T14:11:59.604Z",
-		"2020-05-27T17:01:17.194Z",
-		"2020-07-11T23:36:17.929Z",
-		"2020-07-12T10:51:36.790Z",
+		"2020-11-18T21:31:17.178Z",
+		"2020-12-23T07:42:02.383Z",
+		"2021-01-28T09:15:04.904Z",
+		"2021-04-01T10:17:24.185Z",
+		"2021-05-08T14:11:59.604Z",
+		"2021-05-27T17:01:17.194Z",
+		"2022-01-02T08:22:17.929Z",
+		"2022-01-07T10:51:36.790Z",
 	],
 	currency: "EUR",
 	locale: "pt-PT", // de-DE
@@ -89,19 +89,57 @@ Array.prototype.sum = function () {
 	return this.reduce((accu, current) => accu + current);
 };
 
+function daysPassedSince(date) {
+	let result = Math.round(
+		Math.abs((date - new Date()) / (1000 * 60 * 60 * 24))
+	);
+
+	if (result === 0) result = "today";
+	else if (result === 1) result = "yesterday";
+	else if (result <= 7) result = `${result} days ago`;
+	return String(result);
+}
+
+function getDateTime(date) {
+	let options = {
+		day: "numeric",
+		month: "numeric",
+		year: "numeric",
+	};
+	const dateFull = new Intl.DateTimeFormat(
+		currentAccount.locale,
+		options
+	).format(date);
+
+	options = {
+		hour: "numeric",
+		minute: "numeric",
+	};
+	const time = new Intl.DateTimeFormat(currentAccount.locale, options).format(
+		date
+	);
+	return [dateFull, time];
+}
+
 /**
  * Given an array of numbers, it will parse, create an element and insert them into the movements container inside the DOM.
- * @param {number[]} movements
+ * @param {number[]} account
  */
-function displayMovements(movements, sort = false) {
+function displayMovements(account, sort = false) {
 	containerMovements.innerHTML = "";
 
-	movements = sort ? movements.slice().sort((a, b) => a - b) : movements;
-	movements.forEach((movement, index) => {
-		const type = movement < 0 ? "withdrawal" : "deposit";
+	const movs = sort
+		? account.movements.slice().sort((a, b) => a - b)
+		: account.movements;
+
+	movs.forEach((movement, index) => {
+		const type = movement < 0 ? "debit" : "credit";
+		let date = new Date(account.movementsDates[index]);
+		let result = daysPassedSince(date);
+		if (!result.includes("day")) result = getDateTime(date)[0];
 		const element = `<div class="movements__row">
-		<div class="movements__type movements__type--${type}">${index + 1} ${type}</div>
-		<div class="movements__date">3 days ago</div>
+		<div class="movements__type movements__type--${type}">${type}</div>
+		<div class="movements__date">${result}</div>
 		<div class="movements__value">${movement.toFixed(2)}€</div>
 	</div>`;
 
@@ -163,14 +201,21 @@ function createUsernames(accounts) {
 }
 createUsernames(accounts);
 
+function displayBalanceDate() {
+	const now = new Date();
+	const date = getDateTime(now);
+	labelDate.textContent = `${date[0]}, ${date[1]}`;
+}
+
 /**
  * Updates the UI for the given array of movements.
  * @param {number[]} movements
  */
 function updateUI(movements) {
-	displayMovements(movements);
+	displayMovements(currentAccount);
 	calcDisplayBalance(movements);
 	calcDisplaySummary(movements);
+	displayBalanceDate();
 }
 
 btnLogin.addEventListener("click", (event) => {
@@ -219,6 +264,8 @@ btnTransfer.addEventListener("click", (event) => {
 	else {
 		currentAccount.movements.push(-1 * amount);
 		receiverAcc.movements.push(amount);
+		currentAccount.movementsDates.push(new Date().toISOString());
+		receiverAcc.movementsDates.push(new Date().toISOString());
 
 		inputTransferAmount.value = inputTransferTo.value = "";
 		inputTransferAmount.blur();
@@ -254,8 +301,11 @@ btnLoan.addEventListener("click", (e) => {
 		currentAccount.movements.some((mov) => mov >= amount * 0.1)
 	) {
 		currentAccount.movements.push(amount);
+		currentAccount.movementsDates.push(new Date().toISOString());
 		updateUI(currentAccount.movements);
 		displayNotification(`Loan granted!`, "success");
+		inputLoanAmount.value = "";
+		inputLoanAmount.blur();
 	} else if (!amount || amount <= 0) {
 		displayNotification("Enter a valid loan amount", "warning");
 	} else {
@@ -265,7 +315,7 @@ btnLoan.addEventListener("click", (e) => {
 
 btnSort.addEventListener("click", (event) => {
 	event.preventDefault();
-	displayMovements(currentAccount.movements, !isSorted);
+	displayMovements(currentAccount, !isSorted);
 	isSorted = !isSorted;
 });
 

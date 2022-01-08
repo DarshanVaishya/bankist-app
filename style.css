@@ -153,6 +153,8 @@ nav {
 	padding: 0.1rem 1rem;
 	border-radius: 10rem;
 	margin-right: 2rem;
+	min-width: 9ch;
+	text-align: center;
 }
 
 .movements__date {
@@ -162,11 +164,11 @@ nav {
 	color: #666;
 }
 
-.movements__type--deposit {
+.movements__type--credit {
 	background-image: linear-gradient(to top left, #39b385, #9be15d);
 }
 
-.movements__type--withdrawal {
+.movements__type--debit {
 	background-image: linear-gradient(to top left, #e52a5a, #ff585f);
 }
 
