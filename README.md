@@ -1,6 +1,6 @@
 # Banking app (10th Jan, 2022)
 
-The bankist app is a website which handles bank payments between different accounts. It has functionality such as login, taking loan, transfering money and generating interest. It is written in HTML, CSS and JS.
+Bankist app is a web app created using HTML, CSS and JS. It can perform actions such as requesting loan, transfering funds to users, deleting account, sorting transactions. It uses Intl API to internationalize numbers, date and time for greater user experience. It has a auto logout feature which triggers when a user has been inactive for 2 minutes.
 
 Live Preview: [Link](https://bankist.darshanvaishya.xyz)
 
@@ -36,6 +36,10 @@ Live Preview: [Link](https://bankist.darshanvaishya.xyz)
 ### American user
 
 ![user2](./static/img/screenshots/user2.png)
+
+### Transfering funds
+
+![transfer](./static/img/screenshots/transfer.png)
 
 ### Modal window
 
