@@ -1,4 +1,4 @@
-# Banking app (WIP)
+# Banking app (10th Jan, 2022)
 
 The bankist app is a website which handles bank payments between different accounts. It has functionality such as login, taking loan, transfering money and generating interest. It is written in HTML, CSS and JS.
 
@@ -25,4 +25,18 @@ Live Preview: [Link](https://bankist.darshanvaishya.xyz)
 
 ## Screenshots
 
-To be added
+### Main screen
+
+![main](./static/img/screenshots/main.png)
+
+### Europeon user
+
+![user1](./static/img/screenshots/user1.png)
+
+### American user
+
+![user2](./static/img/screenshots/user2.png)
+
+### Modal window
+
+![modal](./static/img/screenshots/modal.png)

@@ -388,7 +388,7 @@ function removeNotification() {
 	this.addEventListener("transitionend", this.remove);
 }
 
-function displayNotification(text, className = "") {
+function displayNotification(text, className = "", time = 5000) {
 	let notification = `
 	<div class="notification hidden ${className}">
 		${text}
@@ -399,7 +399,7 @@ function displayNotification(text, className = "") {
 	notification = document.querySelector(".notification");
 	notification.addEventListener("click", removeNotification);
 
-	setTimeout(removeNotification.bind(notification), 5000);
+	setTimeout(removeNotification.bind(notification), time);
 	setTimeout(() => notification.classList.remove("hidden"), 50);
 }
 
@@ -426,6 +426,15 @@ btnYes.addEventListener("click", () => {
 	displayNotification("Successfully deleted your account", "success");
 	closeModal();
 });
+
+window.onload = function () {
+	displayNotification(
+		` username: js pin: 1111<br>
+			username: jd pin: 2222`,
+		"success",
+		10000
+	);
+};
 
 window.onbeforeunload = function () {
 	window.scrollTo(0, 0);
