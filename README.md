@@ -18,6 +18,7 @@ Live Preview: [Link](https://bankist.darshanvaishya.xyz)
 - HTML
 - CSS
 - JavaScript
+- Internationalization API
 
 ## Flowchart
 
