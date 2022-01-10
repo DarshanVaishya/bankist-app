@@ -5,8 +5,9 @@
 // BANKIST APP
 
 // Globals
-let currentAccount;
-let isSorted = false;
+let currentAccount,
+	currentTimerId = null,
+	isSorted = false;
 
 // Data
 const account1 = {
@@ -216,6 +217,27 @@ function displayBalanceDate() {
 	labelDate.textContent = `${date[0]}, ${date[1]}`;
 }
 
+function startLogOutTimer() {
+	let time = 300;
+
+	if (currentTimerId) clearInterval(currentTimerId);
+
+	currentTimerId = setInterval(() => {
+		const min = String(Math.floor(time / 60)).padStart(2, 0);
+		const secs = String(time % 60).padStart(2, 0);
+		labelTimer.textContent = `${min}:${secs}`;
+		time--;
+
+		if (time < 0) {
+			clearInterval(currentTimerId);
+			currentTimerId = null;
+			labelWelcome.textContent = "Log in to get started";
+			containerApp.style.opacity = 0;
+			displayNotification("Session expired. Please log in again.", "warning");
+		}
+	}, 1000);
+}
+
 /**
  * Updates the UI for the given array of movements.
  * @param {number[]} movements
@@ -225,6 +247,7 @@ function updateUI(movements) {
 	calcDisplayBalance(movements);
 	calcDisplaySummary(movements);
 	displayBalanceDate();
+	startLogOutTimer();
 }
 
 btnLogin.addEventListener("click", (event) => {
