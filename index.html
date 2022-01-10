@@ -11,7 +11,8 @@
 			rel="stylesheet"
 		/>
 
-		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="static/css/style.css" />
+		<link rel="stylesheet" href="static/css/queries.css" />
 		<title>Bankist</title>
 	</head>
 	<body>
@@ -66,12 +67,18 @@
 
 			<!-- SUMMARY -->
 			<div class="summary">
-				<p class="summary__label">In</p>
-				<p class="summary__value summary__value--in">0000€</p>
-				<p class="summary__label">Out</p>
-				<p class="summary__value summary__value--out">0000€</p>
-				<p class="summary__label">Interest</p>
-				<p class="summary__value summary__value--interest">0000€</p>
+				<div class="wrapper">
+					<p class="summary__label">In</p>
+					<p class="summary__value summary__value--in">0000€</p>
+				</div>
+				<div class="wrapper">
+					<p class="summary__label">Out</p>
+					<p class="summary__value summary__value--out">0000€</p>
+				</div>
+				<div class="wrapper">
+					<p class="summary__label">Interest</p>
+					<p class="summary__value summary__value--interest">0000€</p>
+				</div>
 				<button class="btn--sort">&downarrow; SORT</button>
 			</div>
 
@@ -137,9 +144,9 @@
 			<div class="notification-box"></div>
 		</aside>
 
-		<footer>
+		<!-- <footer>
 			<a href="https://github.com/DarshanVaishya/bankist-app">Code on github</a>
-		</footer>
+		</footer> -->
 
 		<script src="script.js"></script>
 	</body>

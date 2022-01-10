@@ -1,0 +1,70 @@
+@media (max-width: 57.5em) {
+	html {
+		font-size: 55%;
+	}
+}
+
+@media (max-width: 43.75em) {
+	html {
+		font-size: 50%;
+	}
+
+	.summary__value {
+		font-size: 1.75rem;
+	}
+}
+
+@media (max-width: 37.5em) {
+	html {
+		font-size: 45%;
+	}
+
+	.app {
+		grid-template-columns: 100%;
+	}
+
+	.balance {
+		grid-column: span 1;
+	}
+
+	.summary {
+		justify-content: space-around;
+	}
+
+	.btn--sort {
+		margin-left: 0;
+	}
+
+	.operation {
+		max-width: 90%;
+		margin: 0 auto;
+	}
+
+	.logout-timer {
+		text-align: center;
+	}
+}
+
+@media (max-width: 31.25em) {
+	.balance__value {
+		font-size: 3.5rem;
+	}
+
+	.welcome {
+		font-size: 1.6rem;
+	}
+
+	.login__input {
+		width: 10rem;
+	}
+}
+
+@media (max-width: 26.25em) {
+	html {
+		font-size: 40%;
+	}
+
+	.login__input {
+		width: 8rem;
+	}
+}

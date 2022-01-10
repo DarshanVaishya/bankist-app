@@ -262,6 +262,7 @@ function startLogoutTimer() {
 			labelWelcome.textContent = "Log in to get started";
 			containerApp.style.opacity = 0;
 			displayNotification("Session expired. Please log in again.", "warning");
+			window.scrollTo(0, 0);
 		}
 	}, 1000);
 }
