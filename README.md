@@ -46,3 +46,7 @@ Live Preview: [Link](https://bankist.darshanvaishya.xyz)
 ### Modal window
 
 ![modal](./static/img/screenshots/modal.png)
+
+### Mobile view
+
+![mobile](./static/img/screenshots/mobile.jpg)
