@@ -51,7 +51,7 @@
 	}
 
 	.welcome {
-		font-size: 1.6rem;
+		display: none;
 	}
 
 	.login__input {

@@ -384,10 +384,15 @@ h2 {
 	background-color: rgba(0, 0, 0, 0.5);
 	backdrop-filter: blur(3px);
 
-	display: none;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.3s ease;
+
+	display: flex;
 	align-items: center;
 	justify-content: center;
 }
+
 .modal-window {
 	padding: 5rem;
 	width: 40ch;
@@ -409,7 +414,8 @@ h2 {
 }
 
 .visible {
-	display: flex;
+	visibility: visible;
+	opacity: 1;
 }
 
 .btn {

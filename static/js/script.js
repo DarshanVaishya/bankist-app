@@ -413,7 +413,6 @@ function closeModal() {
 	document.body.style.overflow = "visible";
 }
 
-btnNo.addEventListener("click", closeModal);
 btnYes.addEventListener("click", () => {
 	const index = accounts.findIndex(
 		(account) => account.owner === currentAccount.owner
@@ -425,6 +424,14 @@ btnYes.addEventListener("click", () => {
 
 	displayNotification("Successfully deleted your account", "success");
 	closeModal();
+});
+btnNo.addEventListener("click", closeModal);
+document.addEventListener("keydown", (e) => {
+	if (e.key === "Escape" && containerModalWindow.classList.contains("visible"))
+		closeModal();
+});
+containerModalWindow.addEventListener("click", (e) => {
+	if (e.target === containerModalWindow) closeModal();
 });
 
 window.onload = function () {
