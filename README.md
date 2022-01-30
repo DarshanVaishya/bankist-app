@@ -81,6 +81,10 @@ In terms of JS, internationalization API was the biggest take aways from this pr
 
 ## Screenshots
 
+## Open Graph card
+
+![open graph](./assets/img/screenshots/og-tag.png)
+
 ### Main screen
 
 ![main](./assets/img/screenshots/main.png)
