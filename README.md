@@ -77,60 +77,61 @@ In terms of JS, internationalization API was the biggest take aways from this pr
 
 ## Flowchart
 
-![Flowchart](./static/img/Bankist-flowchart.png "Flowchart")
+![Flowchart](./assets/img/Bankist-flowchart.png "Flowchart")
 
 ## Screenshots
 
 ### Main screen
 
-![main](./static/img/screenshots/main.png)
+![main](./assets/img/screenshots/main.png)
 
 ### Europeon user
 
-![user1](./static/img/screenshots/user1.png)
+![user1](./assets/img/screenshots/user1.png)
 
 ### American user
 
-![user2](./static/img/screenshots/user2.png)
+![user2](./assets/img/screenshots/user2.png)
 
 ### Transfering funds
 
-![transfer](./static/img/screenshots/transfer.png)
+![transfer](./assets/img/screenshots/transfer.png)
 
 ### Modal window
 
-![modal](./static/img/screenshots/modal.png)
+![modal](./assets/img/screenshots/modal.png)
 
 ### Mobile view
 
-![mobile](./static/img/screenshots/mobile.jpg)
+![mobile](./assets/img/screenshots/mobile.jpg)
 
 ## Directory structure
 
 ```
 .
+├── assets
+│   ├── css
+│   │   ├── queries.css
+│   │   └── style.css
+│   ├── img
+│   │   ├── Bankist-flowchart.png
+│   │   ├── icon.png
+│   │   ├── logo.png
+│   │   ├── og-image.png
+│   │   └── screenshots
+│   │       ├── main.png
+│   │       ├── mobile.jpg
+│   │       ├── modal.png
+│   │       ├── og-tag.png
+│   │       ├── transfer.png
+│   │       ├── user1.png
+│   │       └── user2.png
+│   └── js
+│       └── script.js
 ├── index.html
-├── README.md
-└── assets
-    ├── css
-    │   ├── queries.css
-    │   └── style.css
-    ├── img
-    │   ├── Bankist-flowchart.png
-    │   ├── icon.png
-    │   ├── logo.png
-    │   ├── og-image.png
-    │   └── screenshots
-    │       ├── main.png
-    │       ├── mobile.jpg
-    │       ├── modal.png
-    │       ├── transfer.png
-    │       ├── user1.png
-    │       └── user2.png
-    └── js
-        └── script.js
+└── README.md
 
-5 directories, 15 files
+5 directories, 16 files
 ```
 
 ## Collaboration
