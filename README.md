@@ -3,7 +3,7 @@
 ## Table of contents
 
 - [Overview](#overview)
-  - [Login data](#technologies-used)
+  - [Login data](#login-data)
   - [Technologies used](#technologies-used)
 - [Flowchart](#flowchart)
 - [Challenges faced](#challenges-faced)
