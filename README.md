@@ -1,6 +1,7 @@
 # Bankist app (10th Jan, 2022)
 
-## Table of contents
+<details>
+ <summary><strong>Table of Contents</strong> (click to expand)</summary>	
 
 - [Overview](#overview)
   - [Login data](#login-data)
@@ -12,6 +13,7 @@
 - [Directory structure](#directory-structure)
 - [Collaboration](#collaboration)
 - [Contact me](#contact-me)
+</details>
 
 ## Overview
 
