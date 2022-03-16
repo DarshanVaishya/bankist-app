@@ -1,4 +1,4 @@
-# Bankist app (10th Jan, 2022)
+# Bankist app
 
 <details>
  <summary><strong>Table of Contents</strong> (click to expand)</summary>	
